@@ -1,36 +1,43 @@
----
 pre-commit:
   parallel: true
   jobs:
     - name: lefthook
       glob: lefthook.yml
-      run: uvx lefthook validate
+      run: uv run lefthook validate
 
     - name: tombi
       glob: '*.toml'
       run: >
-        uvx tombi format {staged_files} &&
-        uvx tombi lint {staged_files}
+        uv run tombi format {staged_files} &&
+        uv run tombi lint {staged_files}
       stage_fixed: true
 
     - name: actionlint
       glob: '.github/workflows/*.{yml,yaml}'
-      run: uvx --from actionlint-py actionlint {staged_files}
+      run: uv run --from actionlint-py actionlint {staged_files}
 
     - name: zizmor
       glob: '.github/workflows/*.{yml,yaml}'
-      run: uvx zizmor {staged_files}
+      run: uv run zizmor {staged_files}
 
     - name: ruff
       glob: '*.{py,pyi}'
       run: >
-        uvx ruff format {staged_files} &&
-        uvx ruff check --fix {staged_files}
+        uv run ruff format {staged_files} &&
+        uv run ruff check --fix {staged_files}
       stage_fixed: true
 
     - name: pyright
       glob: 'yt_dlp_plugins/**/*.py'
-      run: uvx pyright {staged_files}
+      run: uv run pyright {staged_files}
+
+    - name: pytest
+      glob: '**/*.py'
+      exclude: '**/test_*.py'
+      run: >
+        t=$(for f in {staged_files}; do
+        find . -name test_$(basename $f) -type f -print -quit; done);
+        ${t:+uv run pytest -q $t}
 
 colors: false
 no_tty: true
