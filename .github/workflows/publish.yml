@@ -11,6 +11,8 @@ on:
 
 jobs:
   ci:
+    # branch pushではCIが別途走るためスキップし, tag push/手動実行時のみ呼び出す
+    if: github.event_name != 'push' || github.ref_type == 'tag'
     uses: ./.github/workflows/ci.yml
     permissions:
       contents: read
@@ -80,7 +82,9 @@ jobs:
 
   build:
     needs: [ci, resolve-version]
-    if: needs.resolve-version.outputs.should-publish == 'true'
+    if: >-
+      !failure() && !cancelled()
+      && needs.resolve-version.outputs.should-publish == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
