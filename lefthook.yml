@@ -1,14 +1,20 @@
+colors: false
+no_tty: true
+
 pre-commit:
   parallel: true
   jobs:
+    - name: ignored-files
+      run: "! git check-ignore {staged_files}"
+
     - name: lefthook
       glob: lefthook.yml
       run: uv run lefthook validate
 
     - name: tombi
       glob: '*.toml'
-      run: >
-        uv run tombi format {staged_files} &&
+      run: |
+        uv run tombi format {staged_files}
         uv run tombi lint {staged_files}
       stage_fixed: true
 
@@ -22,8 +28,8 @@ pre-commit:
 
     - name: ruff
       glob: '*.{py,pyi}'
-      run: >
-        uv run ruff format {staged_files} &&
+      run: |
+        uv run ruff format {staged_files}
         uv run ruff check --fix {staged_files}
       stage_fixed: true
 
@@ -38,6 +44,3 @@ pre-commit:
         t=$(for f in {staged_files}; do
         find . -name test_$(basename $f) -type f -print -quit; done);
         ${t:+uv run pytest -q $t}
-
-colors: false
-no_tty: true
