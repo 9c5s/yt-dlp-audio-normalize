@@ -317,6 +317,10 @@ dev = [
     { name = "yt-dlp" },
     { name = "zizmor" },
 ]
+test = [
+    { name = "pytest" },
+    { name = "yt-dlp" },
+]
 
 [package.metadata]
 requires-dist = [{ name = "ffmpeg-normalize", specifier = ">=1.37.3" }]
@@ -331,6 +335,10 @@ dev = [
     { name = "tombi", specifier = ">=0.9.2" },
     { name = "yt-dlp", specifier = ">=2026.3.3" },
     { name = "zizmor", specifier = ">=1.22.0" },
+]
+test = [
+    { name = "pytest", specifier = ">=9.0" },
+    { name = "yt-dlp", specifier = ">=2026.3.3" },
 ]
 
 [[package]]
