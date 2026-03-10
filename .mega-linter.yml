@@ -26,7 +26,7 @@ GITHUB_STATUS_REPORTER: true
 
 # pyright用の依存解決
 PRE_COMMANDS:
-  - command: "pip install uv && uv sync --locked"
+  - command: "pip install uv && uv sync --locked --no-default-groups --group test"
     cwd: "workspace"
 
 # MegaLinter生成ファイルを出力するディレクトリ

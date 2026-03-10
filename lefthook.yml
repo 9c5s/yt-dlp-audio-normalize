@@ -1,36 +1,42 @@
----
+colors: false
+no_tty: true
+
 pre-commit:
   parallel: true
   jobs:
+    - name: ignored-files
+      run: "! git check-ignore {staged_files}"
+
     - name: lefthook
       glob: lefthook.yml
-      run: uvx lefthook validate
+      run: uv run lefthook validate
 
     - name: tombi
       glob: '*.toml'
-      run: >
-        uvx tombi format {staged_files} &&
-        uvx tombi lint {staged_files}
+      run: |
+        uv run tombi format {staged_files}
+        uv run tombi lint {staged_files}
       stage_fixed: true
 
     - name: actionlint
       glob: '.github/workflows/*.{yml,yaml}'
-      run: uvx --from actionlint-py actionlint {staged_files}
+      run: uv run actionlint {staged_files}
 
     - name: zizmor
       glob: '.github/workflows/*.{yml,yaml}'
-      run: uvx zizmor {staged_files}
+      run: uv run zizmor {staged_files}
 
     - name: ruff
       glob: '*.{py,pyi}'
-      run: >
-        uvx ruff format {staged_files} &&
-        uvx ruff check --fix {staged_files}
+      run: |
+        uv run ruff format {staged_files}
+        uv run ruff check --fix {staged_files}
       stage_fixed: true
 
     - name: pyright
       glob: 'yt_dlp_plugins/**/*.py'
-      run: uvx pyright {staged_files}
+      run: uv run pyright {staged_files}
 
-colors: false
-no_tty: true
+    - name: pytest
+      glob: '**/*.py'
+      run: uv run pytest -q
