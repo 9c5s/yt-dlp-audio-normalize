@@ -151,9 +151,8 @@ jobs:
           name: dist
           path: dist/
 
-      - uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2
-        # zizmor: ignore[superfluous-actions]
-        with:
-          tag_name: v${{ needs.resolve-version.outputs.version }}
-          generate_release_notes: true
-          files: dist/*
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ needs.resolve-version.outputs.version }}
+        run: gh release create "$TAG" dist/* --generate-notes
