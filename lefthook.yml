@@ -59,3 +59,8 @@ post-merge:
   jobs:
     - name: uv-sync
       run: uv sync
+
+post-rewrite:
+  jobs:
+    - name: uv-sync
+      run: '[ "{1}" = rebase ] && uv sync || true'
