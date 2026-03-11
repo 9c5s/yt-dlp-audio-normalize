@@ -1,3 +1,5 @@
+"""テスト用の共有フィクスチャ定義."""
+
 from __future__ import annotations
 
 from unittest.mock import MagicMock

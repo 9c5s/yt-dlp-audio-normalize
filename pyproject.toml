@@ -127,26 +127,6 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?)|dummy|unused)$"
 preview = true
 explicit-preview-rules = true
 typing-modules = ["typing", "typing_extensions"]
-task-tags = [
-  "TODO",
-  "FIXME",
-  "HACK",
-  "BUG",
-  "NOBUG",
-  "REQ",
-  "IDEA",
-  "NOTE",
-  "ISSUE",
-  "XXX",
-  "やること",
-  "修正",
-  "バグ",
-  "ノート",
-  "問題",
-  "要修正",
-  "要確認",
-  "仮実装",
-]
 
 [tool.ruff.lint.flake8-annotations]
 allow-star-arg-any = false
@@ -267,35 +247,12 @@ keep-runtime-typing = true
   "PLR2004",
   "S311",
   "ANN",
-  "D",
   "PLR0913",
   "SLF001",
+  "D403",
 ]
 "*.pyi" = [
   "ANN401",
-  "D",
-]
-"**/migrations/**/*.py" = [
-  "ALL",
-]
-"conf.py" = [
-  "D100",
-]
-"setup.py" = [
-  "D",
-  "ANN",
-]
-"docs/conf.py" = [
-  "D100",
-  "A001",
-]
-"scripts/**/*.py" = [
-  "S603",
-  "S607",
-]
-"experimental/**/*.py" = [
-  "PLR2004",
-  "S101",
 ]
 
 [tool.setuptools.packages.find]
