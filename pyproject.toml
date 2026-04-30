@@ -1,6 +1,6 @@
 [project]
 name = "yt-dlp-audio-normalize"
-version = "0.3.1"
+version = "0.3.2"
 description = "yt-dlp postprocessor plugin for audio normalization using ffmpeg-normalize"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -19,7 +19,7 @@ classifiers = [
   "Topic :: Multimedia :: Sound/Audio",
 ]
 dependencies = [
-  "ffmpeg-normalize>=1.37.3",
+  "ffmpeg-normalize>=1.37.6",
 ]
 
 [project.urls]
@@ -48,8 +48,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.pyright]
 include = ["yt_dlp_plugins/"]
-stubPath = "typings"
+venvPath = "."
+venv = ".venv"
 typeCheckingMode = "strict"
+reportMissingModuleSource = "none"
 
 [tool.pytest]
 addopts = [
