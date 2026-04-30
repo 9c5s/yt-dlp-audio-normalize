@@ -37,7 +37,9 @@ pre-commit:
       run: uv run actionlint {staged_files}
 
     - name: zizmor
-      glob: '.github/workflows/*.{yml,yaml}'
+      glob:
+        - '.github/workflows/*.{yml,yaml}'
+        - '.github/dependabot.yml'
       run: uv run zizmor {staged_files}
 
     - name: ruff
