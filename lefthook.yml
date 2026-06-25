@@ -37,7 +37,9 @@ pre-commit:
       run: uv run actionlint {staged_files}
 
     - name: zizmor
-      glob: '.github/workflows/*.{yml,yaml}'
+      glob:
+        - '.github/workflows/*.{yml,yaml}'
+        - '.github/dependabot.yml'
       run: uv run zizmor {staged_files}
 
     - name: ruff
@@ -54,6 +56,16 @@ pre-commit:
     - name: pytest
       glob: '**/*.py'
       run: uv run pytest -q
+
+commit-msg:
+  jobs:
+    - name: commitizen
+      run: uv run cz check --commit-msg-file {1}
+    - name: no-scope
+      run: >
+        head -n1 {1} | grep -qE '^[a-z]+\(.*\):'&&
+        echo Scope is not allowed. Use 'type: subject' format.&&
+        exit 1;true
 
 post-merge:
   jobs:
